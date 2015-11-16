@@ -1,0 +1,30 @@
+- Rendezvous
+
+	- IP:Porta fixos. Nós que querem se conectar ao DHT devem se conectar ao rendezvous primeiro.
+	- Comunicaçao feita via socket UDP:
+		- Inicio DHT: Nó envia "hello"  para o rendezvous.
+		- Rendezvous gera um ID para o nó.
+		- Nó retorna um ACK.
+		- Rendezvous associa IP:Porta do nó solicitante para o ID gerado acima.
+	- Duas formas de formacao dos IDs distintas:
+		- 0 a K, k = maximos de nos na rede.
+		ou
+		- 2 a K, sendo todo elemento uma potencia de 2.
+	- IDs devem ser atribuidos de forma aleatoria. dentro da faixa K.
+	- Renzesvouz salva uma tabela com todos os nos participantes e seus respectivos IDs.
+	- Caso o nó seja o primeiro a entrar no DHT, a resposta sera "root_node", caso ja exista o DHT a resposta será IP:porta do root node
+	- Os nós devem avisar o rendezvous quando forem sair da rede.
+		- mensagem: "disconnected"
+	- Os nós devem avisar o rendezvous a cada X segundos que estao ativos. (evitar manter alocado caso a internet caiu ou algo do tipo)
+		- mensagem: "still active"
+
+
+	PROBLEMAS: 
+	- "O cliente envia a mensagem hello mas nao recebe a mensagem resposta do servidor"
+		- espera por um TIME_LIMIT, caso nao receba resposta envia a request novamente.
+ 	- "O servidor envia a mensagem com o ID pre-alocado mas naao recebe a confirmacao de Ack do cliente"
+ 		- Reenvia o ID apos um TIME_LIMIT, caso nao receba o ACK novamente desaloca o ID e mata o processo.
+ 	- "Mensagens chegam duplicadas no servidor"
+ 		- Ignora a mensagem duplicada.
+ 	- "Mensagens chegam fora da ordem ao servidor (UDP)"
+ 		- Ignora a mensagem fora de ordem.
