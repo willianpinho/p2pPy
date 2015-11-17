@@ -12,9 +12,12 @@
 		- 2 a K, sendo todo elemento uma potencia de 2.
 	- IDs devem ser atribuidos de forma aleatoria. dentro da faixa K.
 	- Renzesvouz salva uma tabela com todos os nos participantes e seus respectivos IDs.
-	- Caso o nó seja o primeiro a entrar no DHT, a resposta sera "root_node", caso ja exista o DHT a resposta será IP:porta do root node
+	- Apos receberem seu ID os nós devem perguntar para o rendezvous quem é o root node. Isso é feito mandando uma mensagem ‘root node’
+		- Caso nao ha root node ainda, a resposta será ‘no root yet’
+		- Caso haja um root, a resposta será ‘ip:porta’
+		- Caso haja um root e seja quem perguntou, a resposta será ‘you are the root’
 	- Os nós devem avisar o rendezvous quando forem sair da rede.
-		- mensagem: "disconnected"
+		- mensagem: "disconnect"
 	- Os nós devem avisar o rendezvous a cada X segundos que estao ativos. (evitar manter alocado caso a internet caiu ou algo do tipo)
 		- mensagem: "still active"
 
@@ -25,6 +28,6 @@
  	- "O servidor envia a mensagem com o ID pre-alocado mas naao recebe a confirmacao de Ack do cliente"
  		- Reenvia o ID apos um TIME_LIMIT, caso nao receba o ACK novamente desaloca o ID e mata o processo.
  	- "Mensagens chegam duplicadas no servidor"
- 		- Ignora a mensagem duplicada.
+ 		- Definir como vou fazer isso. provavelmente eu confiro e so ignoro caso seja repetido
  	- "Mensagens chegam fora da ordem ao servidor (UDP)"
- 		- Ignora a mensagem fora de ordem.
+ 		- Trata na ordem que chegou.
