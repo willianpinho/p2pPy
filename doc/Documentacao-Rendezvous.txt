@@ -31,3 +31,31 @@
  		- Definir como vou fazer isso. provavelmente eu confiro e so ignoro caso seja repetido
  	- "Mensagens chegam fora da ordem ao servidor (UDP)"
  		- Trata na ordem que chegou.
+
+
+
+- REQUESTS:
+	- ‘hello’
+		- Caso 1: Nó nao esta alocado e nao ha root
+			- O rendezvous pre aloca o ID. Porem nao abre thread ainda. Ele ignora novas requests.
+			- Retorna o ‘ID;you are the root node’. 
+			- Fica aguardando um ACK do no solicitante. 
+			- Nao receba mais nenhuma request durante o periodo de espera.
+			- Recebendo o ACK:
+				- ele salva que o root node é aquele ID pre aloca e aloca o No definitivamente
+				- retorna 
+			- Nao recebendo o ACK ele apenas desaloca tudo e volta para o estado de espera de um root node.
+		- Caso 2: Nó nao esta alocado e ha root
+		- Caso 3: Nó está alocado ou pre alocado
+			- Simplesmente ignora.(nao faz nada)
+		
+
+
+
+
+
+
+
+
+
+
