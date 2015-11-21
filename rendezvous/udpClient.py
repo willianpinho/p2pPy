@@ -1,4 +1,5 @@
 import socket
+import json
 
 host = 'localhost'                                          # ip do servidor
 port = 5000                                                 # porta do servidor
@@ -10,6 +11,7 @@ destination = (host, port)                                  # tupla com IP:porta
 message = raw_input()
 
 while message != 'end':
+    messageJSON = json.dumps(message)
     udp.sendto(message, destination)                       # envia a mensagem para o servidor
     messageFromServer, client = udp.recvfrom(1024)
     print client, messageFromServer

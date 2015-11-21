@@ -3,6 +3,7 @@ from random import randint
 
 class Rendezvous(object):
     arrayWithAllocedIDs = []
+    arrayWithPreAllocedIDs = []
     arrayWithEmptyIDs = []
     rootNodeID = -1
 
@@ -10,7 +11,15 @@ class Rendezvous(object):
         for i in range(0, k):
             self.arrayWithEmptyIDs.append(i)
 
-    def pickRandomEmptyID(self):
+    # checa se um no ja esta alocado (recebe 'ip', porta)
+    def checkIfNodeAlreadyAlloced(self, ip, port):
+        for (idDHT, (ip2, port2)) in self.arrayWithAllocedIDs:
+            if (ip == ip2) and (port == port2) :
+                return True
+        return False
+
+    # retorna um ID pre-alocado ou um codigo de erro
+    def pickRandomEmptyID(self, ip, port):
         if len(self.arrayWithEmptyIDs) > 0:
             pos = randint(0, len(self.arrayWithEmptyIDs)-1)
             return self.arrayWithEmptyIDs[pos]
